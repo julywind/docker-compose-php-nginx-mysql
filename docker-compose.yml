@@ -4,7 +4,7 @@ services:
         image: nginx:latest
         # 端口映射
         ports:
-            - "80:80"
+            - "81:80"
         # 依赖关系 先跑php
         depends_on:
             - "php"
@@ -40,6 +40,36 @@ services:
                 # 固定子网ip，网段必须在子网络10.10.*.*
                 ipv4_address: 10.10.10.1
         container_name: "compose-mysql"
+    redis:
+        # 指定镜像
+        image: redis:latest
+        ports:
+          # 端口映射
+          - 6379:6379
+        networks:
+            app_net:
+                # 固定子网ip，网段必须在子网络10.10.*.*
+                ipv4_address: 10.10.10.1
+
+    mongo:
+        image: mongo
+        restart: always
+        ports:
+          - 27017:27017
+        networks:
+            app_net:
+                # 固定子网ip，网段必须在子网络10.10.*.*
+                ipv4_address: 10.10.10.1
+    
+    memcached:
+        image: memcached
+        restart: always
+        ports:
+          - 11211:11211
+        networks:
+            app_net:
+                # 固定子网ip，网段必须在子网络10.10.*.*
+                ipv4_address: 10.10.10.1
 networks:
     # 配置docker network
     app_net:
@@ -48,3 +78,4 @@ networks:
             config:
                 # 子网络
                 - subnet: 10.10.0.0/16
+
