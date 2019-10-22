@@ -35,10 +35,6 @@ services:
         environment:
             # mysql密码
             - MYSQL_ROOT_PASSWORD=123456
-        networks:
-            app_net:
-                # 固定子网ip，网段必须在子网络10.10.*.*
-                ipv4_address: 10.10.10.1
         container_name: "compose-mysql"
     redis:
         # 指定镜像
@@ -46,30 +42,18 @@ services:
         ports:
           # 端口映射
           - 6379:6379
-        networks:
-            app_net:
-                # 固定子网ip，网段必须在子网络10.10.*.*
-                ipv4_address: 10.10.10.1
 
     mongo:
         image: mongo
         restart: always
         ports:
           - 27017:27017
-        networks:
-            app_net:
-                # 固定子网ip，网段必须在子网络10.10.*.*
-                ipv4_address: 10.10.10.1
     
     memcached:
         image: memcached
         restart: always
         ports:
           - 11211:11211
-        networks:
-            app_net:
-                # 固定子网ip，网段必须在子网络10.10.*.*
-                ipv4_address: 10.10.10.1
 networks:
     # 配置docker network
     app_net:
